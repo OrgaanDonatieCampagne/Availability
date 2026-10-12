@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Enter availability · Sensibiliseringscampagne orgaandonatie</title>
+  <meta name="description" content="Share your availability in a few minutes with the Sensibiliseringscampagne orgaandonatie, down to the minute, on-site or online.">
+  <meta name="theme-color" content="#C91F1F">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23C91F1F'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-participant">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="index.html" aria-label="Sensibiliseringscampagne orgaandonatie – home">
+        <span class="brand-word">Sensibiliseringscampagne orgaandonatie</span>
+        <span class="brand-tag">Planning</span>
+      </a>
+      <nav class="header-nav" aria-label="Main navigation">
+        <a href="availability.html" aria-current="page">Enter availability</a>
+        <a href="coordinator.html">Coordinator</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="container">
+
+      <div class="page-head">
+        <div>
+          <h1>Share your availability</h1>
+          <p>Indicate when you can meet on-site or online. It only takes a few minutes.</p>
+        </div>
+      </div>
+
+      <ol class="steps" id="steps" aria-label="Progress">
+        <li data-step="1"><span class="n">1</span><span class="t"><small>Step 1 of 3</small>Details</span></li>
+        <li data-step="2"><span class="n">2</span><span class="t"><small>Step 2 of 3</small>Availability</span></li>
+        <li data-step="3"><span class="n">3</span><span class="t"><small>Step 3 of 3</small>Check &amp; submit</span></li>
+      </ol>
+
+      <!-- Notice: unfinished draft found on this device -->
+      <div class="alert alert-brand" id="resumeBanner" hidden style="margin-bottom:18px">
+        <i data-icon="info"></i>
+        <div style="flex:1">
+          <p><strong>An unfinished entry is saved on this device</strong> for <strong id="resumeName"></strong> (<span id="resumeWhen"></span>).</p>
+          <p class="small">Is this not you? Start again: the previous person's details will be cleared and not shown.</p>
+          <div class="btn-row">
+            <button class="btn btn-dark btn-sm" type="button" id="resumeYes">Yes, that's me. Continue</button>
+            <button class="btn btn-sm" type="button" id="resumeNo"><i data-icon="trash"></i> No, start again</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ STEP 1 – Details ============ -->
+      <section id="step1" class="step-panel" aria-labelledby="s1-title" hidden>
+        <div class="container-narrow" style="margin:0 auto">
+          <form class="card" id="detailsForm" novalidate>
+            <div class="card-header">
+              <div>
+                <h2 id="s1-title" class="section-title"><span class="num-badge">1</span> Who are you and for which period?</h2>
+                <p class="card-sub">All fields are required.</p>
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <div class="field">
+                <label for="firstName">First name</label>
+                <input class="input" id="firstName" name="firstName" autocomplete="given-name" maxlength="60" required placeholder="e.g. Ali">
+                <div class="field-error" id="firstName-err" aria-live="polite"></div>
+              </div>
+              <div class="field">
+                <label for="lastName">Last name</label>
+                <input class="input" id="lastName" name="lastName" autocomplete="family-name" maxlength="60" required placeholder="e.g. Alhayek">
+                <div class="field-error" id="lastName-err" aria-live="polite"></div>
+              </div>
+              <div class="field">
+                <label for="startDate">Start date</label>
+                <input class="input" type="date" id="startDate" name="startDate" required>
+                <div class="field-error" id="startDate-err" aria-live="polite"></div>
+              </div>
+              <div class="field">
+                <label for="endDate">End date</label>
+                <input class="input" type="date" id="endDate" name="endDate" required>
+                <div class="field-error" id="endDate-err" aria-live="polite"></div>
+              </div>
+            </div>
+
+            <div class="alert alert-info" id="periodLocked" hidden style="margin-top:14px">
+              <i data-icon="lock"></i>
+              <div>The period was set by the coordinator via your invitation link.</div>
+            </div>
+
+            <div id="periodQuick" style="margin-top:14px">
+              <span class="label" style="display:block;margin-bottom:8px">Quick choice</span>
+              <div class="pill-group">
+                <button type="button" class="check-pill" data-quick="thisweek">This week</button>
+                <button type="button" class="check-pill" data-quick="nextweek">Next week</button>
+                <button type="button" class="check-pill" data-quick="next2">Next 2 weeks</button>
+              </div>
+            </div>
+
+            <p class="muted small" id="periodInfo" style="margin:14px 0 0" aria-live="polite"></p>
+
+            <div class="btn-row between" style="margin-top:20px">
+              <label class="btn btn-ghost btn-sm" for="importFile" style="cursor:pointer">
+                <i data-icon="file"></i> Open an earlier file to edit
+              </label>
+              <input type="file" id="importFile" accept=".json,application/json" class="visually-hidden">
+              <button class="btn btn-primary btn-lg" type="submit">Enter availability <i data-icon="arrowRight"></i></button>
+            </div>
+          </form>
+
+          <p class="privacy-note" style="justify-content:center;color:var(--muted)">
+            <i data-icon="shield"></i>
+            <span>Your details stay on this device until you download or submit them yourself.</span>
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ STEP 2 – Availability ============ -->
+      <section id="step2" class="step-panel" aria-labelledby="s2-title" hidden>
+        <h2 id="s2-title" class="visually-hidden">Mark your availability</h2>
+
+        <div class="planner-bar">
+          <div class="planner-bar-inner">
+            <div class="brush" role="group" aria-label="What do you want to mark?">
+              <button type="button" data-brush="1" aria-pressed="true" title="On-site available (key 1)"><span class="sw sw-1"></span><i data-icon="user"></i> On-site <span class="long">available</span> <span class="k">1</span></button>
+              <button type="button" data-brush="2" aria-pressed="false" title="Online only (key 2)"><span class="sw sw-2"></span><i data-icon="laptop"></i> <span class="long">Online</span> only <span class="k">2</span></button>
+              <button type="button" data-brush="0" aria-pressed="false" title="Clear: unavailable (key 3)"><span class="sw sw-0"></span><i data-icon="eraser"></i> Clear <span class="k">3</span></button>
+            </div>
+            <div class="selection-live" id="selectionLive" aria-live="polite"><i data-icon="clock"></i> <span id="selectionText">Drag along the timeline</span></div>
+            <div class="planner-tools">
+              <button class="btn btn-ghost btn-sm btn-icon" type="button" id="undoBtn" title="Undo (Ctrl+Z)" aria-label="Undo"><i data-icon="undo"></i></button>
+              <button class="btn btn-ghost btn-sm btn-icon" type="button" id="redoBtn" title="Redo (Ctrl+Y)" aria-label="Redo"><i data-icon="redo"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <p class="planner-hint" id="plannerHint">
+          <i data-icon="info"></i>
+          <span id="plannerHintText">Choose <strong>On-site</strong>, <strong>Online</strong> or <strong>Clear</strong> above and drag along a timeline to mark an exact time range, down to the minute. One click sets or clears a block of 15 minutes.</span>
+        </p>
+
+        <div class="bulk-bar">
+          <span class="label">Fill in faster:</span>
+          <button class="btn btn-sm" type="button" id="bulkFillBtn"><i data-icon="sparkle"></i> Same time range on several days</button>
+          <label class="check" style="margin-left:auto"><input type="checkbox" id="hideNight"> Hide night hours (00:00–06:00)</label>
+          <button class="btn btn-danger-ghost btn-sm" type="button" id="clearAllBtn"><i data-icon="trash"></i> Clear all</button>
+        </div>
+
+        <div class="legend" style="margin-bottom:14px" aria-label="Legend">
+          <span class="legend-item"><span class="sw sw-1"></span> <i data-icon="user"></i> On-site available</span>
+          <span class="legend-item"><span class="sw sw-2"></span> <i data-icon="laptop"></i> Online only</span>
+          <span class="legend-item"><span class="sw sw-0"></span> Unavailable</span>
+        </div>
+
+        <div class="day-list" id="dayList"></div>
+
+        <div class="btn-row between" style="margin-top:24px">
+          <button class="btn" type="button" id="backTo1"><i data-icon="arrowLeft"></i> Details</button>
+          <button class="btn btn-primary btn-lg" type="button" id="toReview">Check <i data-icon="arrowRight"></i></button>
+        </div>
+      </section>
+
+      <!-- ============ STEP 3 – Check & submit ============ -->
+      <section id="step3" class="step-panel" aria-labelledby="s3-title" hidden>
+        <div class="card" id="reviewCard">
+          <div class="card-header">
+            <div>
+              <h2 id="s3-title" class="section-title"><span class="num-badge">3</span> Check your availability</h2>
+              <p class="card-sub">Is everything correct? Then download or submit your file.</p>
+            </div>
+          </div>
+          <div>
+            <div style="font-family:var(--font-display);font-weight:700;font-size:1.35rem" id="rvName"></div>
+            <div class="muted" id="rvPeriod"></div>
+          </div>
+          <div class="summary-grid">
+            <div class="stat"><div class="v tabular" id="rvDays">0</div><div class="l"><i data-icon="calendar"></i> days in period</div></div>
+            <div class="stat"><div class="v tabular" id="rvFilled">0</div><div class="l"><i data-icon="check"></i> days with availability</div></div>
+            <div class="stat physical"><div class="v tabular" id="rvPhys">0 h</div><div class="l"><span class="sw sw-1"></span> on-site available</div></div>
+            <div class="stat online"><div class="v tabular" id="rvOnline">0 h</div><div class="l"><span class="sw sw-2"></span> online only</div></div>
+          </div>
+          <div id="rvWarnings"></div>
+          <h3 style="margin-top:18px">Overview per day</h3>
+          <div class="mini-days" id="rvDaysList"></div>
+
+          <div class="alert alert-info" id="submitInfo" hidden style="margin-top:20px">
+            <i data-icon="send"></i>
+            <div>When you click <strong>Submit availability</strong>, your name, the period and your availability are sent to the Sensibiliseringscampagne orgaandonatie. No other data is sent.</div>
+          </div>
+
+          <div class="btn-row between" style="margin-top:22px">
+            <button class="btn" type="button" id="backTo2"><i data-icon="arrowLeft"></i> Go back and edit</button>
+            <div class="btn-row">
+              <button class="btn" type="button" id="downloadBtn"><i data-icon="download"></i> Download availability file</button>
+              <button class="btn btn-primary btn-lg" type="button" id="submitBtn" hidden><i data-icon="send"></i> Submit availability</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- After download/submit -->
+        <div class="card done-card" id="doneCard" hidden tabindex="-1">
+          <div class="big-ico"><i data-icon="check"></i></div>
+          <h2 id="doneTitle">Your file has been downloaded</h2>
+          <p class="muted" id="doneText">File name: <span class="filename" id="doneFilename"></span></p>
+          <p class="muted" id="doneSteps" style="max-width:520px;margin:18px auto 0">Upload the downloaded file to the shared OneDrive folder from your invitation e-mail. If you cannot, reply to that e-mail and attach the file.</p>
+          <div class="btn-row" style="justify-content:center;margin-top:20px">
+            <a class="btn btn-dark" id="mailtoBtn" href="#" hidden><i data-icon="mail"></i> Open e-mail</a>
+            <button class="btn" type="button" id="downloadAgain"><i data-icon="download"></i> Download again</button>
+            <button class="btn" type="button" id="editAgain"><i data-icon="arrowLeft"></i> Edit anyway</button>
+          </div>
+          <div class="alert alert-warn" style="margin-top:24px;text-align:left">
+            <i data-icon="lock"></i>
+            <div>
+              <p><strong>Shared computer?</strong> Clear your details from this device when you are done.</p>
+              <button class="btn btn-sm btn-dark" type="button" id="wipeBtn"><i data-icon="trash"></i> Clear my details from this device</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Dialog: time range on one or more days -->
+  <dialog class="modal" id="rangeDialog" aria-labelledby="rd-title">
+    <form method="dialog" id="rangeForm">
+      <div class="modal-head"><h2 id="rd-title">Add time range</h2></div>
+      <div class="modal-body">
+        <div class="form-grid" style="grid-template-columns:1fr 1fr">
+          <div class="field"><label for="rdFrom">From: <output id="rdFromOut">09:00</output></label><input type="range" id="rdFrom" min="0" max="1440" step="1" value="540"></div>
+          <div class="field"><label for="rdTo">To: <output id="rdToOut">17:00</output></label><input type="range" id="rdTo" min="0" max="1440" step="1" value="1020"></div>
+        </div>
+        <div class="field" style="margin-top:14px">
+          <span class="label">Status</span>
+          <div class="pill-group" role="radiogroup" aria-label="Status">
+            <label class="check-pill"><input type="radio" name="rdStatus" value="1" checked><span class="sw sw-1"></span> On-site</label>
+            <label class="check-pill"><input type="radio" name="rdStatus" value="2"><span class="sw sw-2"></span> Online only</label>
+            <label class="check-pill"><input type="radio" name="rdStatus" value="0"><span class="sw sw-0"></span> Clear</label>
+          </div>
+        </div>
+        <div class="field" style="margin-top:16px">
+          <span class="label">Apply to</span>
+          <div class="quick-sel" id="rdQuick"></div>
+          <div class="copy-list" id="rdDays"></div>
+        </div>
+        <div class="field-error" id="rdError" aria-live="polite"></div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" value="cancel" type="button" id="rdCancel">Cancel</button>
+        <button class="btn btn-primary" type="submit" id="rdApply">Apply</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Dialog: copy a day to other days -->
+  <dialog class="modal" id="copyDialog" aria-labelledby="cp-title">
+    <form method="dialog" id="copyForm">
+      <div class="modal-head"><h2 id="cp-title">Copy to other days</h2></div>
+      <div class="modal-body">
+        <p class="muted small" id="cpInfo" style="margin-bottom:10px"></p>
+        <div class="quick-sel" id="cpQuick"></div>
+        <div class="copy-list" id="cpDays"></div>
+        <p class="small muted" style="margin:6px 0 0">The existing entries on the chosen days will be replaced.</p>
+        <div class="field-error" id="cpError" aria-live="polite"></div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn" type="button" id="cpCancel">Cancel</button>
+        <button class="btn btn-primary" type="submit">Copy</button>
+      </div>
+    </form>
+  </dialog>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© <span id="year">2026</span> Sensibiliseringscampagne orgaandonatie</span>
+      <span class="privacy-inline"><i data-icon="shield"></i> No tracking, no cookies.</span>
+    </div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="core.js"></script>
+  <script src="ui.js"></script>
+  <script src="availability.js"></script>
+</body>
+</html>

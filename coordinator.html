@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Coordinator · Sensibiliseringscampagne orgaandonatie</title>
+  <meta name="description" content="Load availability files and find shared meeting moments. Everything is processed locally in your browser.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#C91F1F">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23C91F1F'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="page-coordinator">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="index.html" aria-label="Sensibiliseringscampagne orgaandonatie – home">
+        <span class="brand-word">Sensibiliseringscampagne orgaandonatie</span>
+        <span class="brand-tag">Coordinator</span>
+      </a>
+      <nav class="header-nav" aria-label="Main navigation">
+        <a href="availability.html">Enter availability</a>
+        <a href="coordinator.html" aria-current="page">Coordinator</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="container">
+      <div class="page-head">
+        <div>
+          <h1>Find shared moments</h1>
+          <p>Load the availability files of your group, choose the meeting length and find when everyone can meet.</p>
+        </div>
+        <span class="badge badge-success"><i data-icon="lock"></i> Processed fully locally</span>
+      </div>
+
+      <div class="coord-grid">
+        <!-- ============ Side column ============ -->
+        <aside class="coord-side" aria-label="Files and participants">
+          <section class="card" aria-labelledby="files-title">
+            <h2 id="files-title" class="section-title" style="font-size:1.1rem"><span class="num-badge">1</span> Load files</h2>
+            <label class="dropzone" id="dropzone" for="fileInput">
+              <span class="dz-ico"><i data-icon="upload" class="icon-lg"></i></span>
+              <strong>Drag availability files here</strong>
+              <span class="muted small">or <u>click to select files</u> (.json, several at once)</span>
+              <input type="file" id="fileInput" accept=".json,application/json" multiple>
+            </label>
+            <p class="privacy-note"><i data-icon="shield"></i><span>The files are processed locally in your browser and are not uploaded.</span></p>
+            <ul class="file-log" id="fileLog" aria-live="polite"></ul>
+            <div class="btn-row" style="margin-top:10px">
+              <button class="btn btn-ghost btn-sm" type="button" id="clearLog" hidden>Clear messages</button>
+              <button class="btn btn-ghost btn-sm" type="button" id="loadSamples"><i data-icon="sparkle"></i> Load sample data</button>
+            </div>
+          </section>
+
+          <section class="card" aria-labelledby="people-title">
+            <div class="card-header" style="margin-bottom:4px">
+              <h2 id="people-title" class="section-title" style="font-size:1.1rem"><span class="num-badge">2</span> Participants</h2>
+              <button class="btn btn-danger-ghost btn-sm" type="button" id="removeAll" hidden><i data-icon="trash"></i> All</button>
+            </div>
+            <div class="people-count" id="peopleCount" aria-live="polite">No participants loaded yet</div>
+            <ul class="people" id="peopleList"></ul>
+            <div class="common-period" id="commonPeriod" hidden></div>
+          </section>
+
+          <section class="card" aria-labelledby="invite-title">
+            <h2 id="invite-title" class="section-title" style="font-size:1.05rem"><i data-icon="link"></i> Invitation link</h2>
+            <p class="muted small" style="margin-bottom:10px">Create a link that already fixes the period. That way everyone fills in the same days.</p>
+            <div class="form-grid" style="grid-template-columns:1fr 1fr;gap:10px">
+              <div class="field"><label for="invStart">From</label><input class="input input-sm" type="date" id="invStart"></div>
+              <div class="field"><label for="invEnd">To</label><input class="input input-sm" type="date" id="invEnd"></div>
+            </div>
+            <div class="field-error" id="invErr" aria-live="polite"></div>
+            <button class="btn btn-sm btn-block" type="button" id="invCopy" style="margin-top:10px"><i data-icon="copy"></i> Copy link</button>
+          </section>
+        </aside>
+
+        <!-- ============ Main column ============ -->
+        <div>
+          <section class="card" aria-labelledby="search-title">
+            <div class="card-header">
+              <div>
+                <h2 id="search-title" class="section-title" style="font-size:1.2rem"><span class="num-badge">3</span> Meeting &amp; filters</h2>
+              </div>
+            </div>
+
+            <div class="controls-grid">
+              <div class="field">
+                <label for="duration">Meeting length</label>
+                <select class="input" id="duration"></select>
+              </div>
+              <div class="field">
+                <label for="minPeople">Minimum number of participants</label>
+                <select class="input" id="minPeople" disabled><option>Everyone</option></select>
+                <span class="hint">Choose fewer than everyone to also see moments when nearly everyone can attend.</span>
+              </div>
+              <div class="field">
+                <span class="label">Date</span>
+                <div class="time-pair">
+                  <input class="input input-sm" type="date" id="dateFrom" aria-label="Date from">
+                  <span class="muted">to</span>
+                  <input class="input input-sm" type="date" id="dateTo" aria-label="Date to">
+                </div>
+              </div>
+              <div class="field">
+                <span class="label">Hours</span>
+                <div class="time-pair">
+                  <select class="input input-sm" id="timeFrom" aria-label="Earliest start time"></select>
+                  <span class="muted">to</span>
+                  <select class="input input-sm" id="timeTo" aria-label="Latest end time"></select>
+                </div>
+              </div>
+              <div class="field full">
+                <span class="label">Days</span>
+                <div class="pill-group" id="weekdays"></div>
+              </div>
+              <div class="field full">
+                <span class="label">Type</span>
+                <div class="pill-group" id="types">
+                  <label class="check-pill"><input type="checkbox" value="physical" checked><span class="sw sw-1"></span> Everyone on-site</label>
+                  <label class="check-pill"><input type="checkbox" value="mixed" checked><span class="sw sw-1"></span><span class="sw sw-2" style="margin-left:-4px"></span> On-site/online mix</label>
+                  <label class="check-pill"><input type="checkbox" value="online" checked><span class="sw sw-2"></span> Everyone online</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="btn-row between" style="margin-top:20px">
+              <span class="muted small" id="searchHint">Load at least one file first.</span>
+              <button class="btn btn-primary btn-lg" type="button" id="searchBtn" disabled><i data-icon="search"></i> Find shared moments</button>
+            </div>
+          </section>
+
+          <section class="card" id="heatmapCard" aria-labelledby="hm-title" hidden>
+            <div class="card-header">
+              <div>
+                <h2 id="hm-title" style="font-size:1.2rem;margin:0">Visual overview</h2>
+                <p class="card-sub">Per minute: red = number on-site, yellow = number online, grey = unavailable. Hover over or tap a block for details.</p>
+              </div>
+            </div>
+            <div class="heatmap-wrap"><div class="heatmap" id="heatmap"></div></div>
+            <div class="hm-legend">
+              <span class="legend-item"><span class="sw sw-1"></span> on-site</span>
+              <span class="legend-item"><span class="sw" style="background:var(--online)"></span> online only</span>
+              <span class="legend-item"><span class="sw sw-0"></span> unavailable</span>
+              <span class="legend-item"><span class="sw sw-all"></span> everyone available</span>
+              <span class="legend-item"><span class="sw sw-x"></span> clock change / no data</span>
+            </div>
+          </section>
+          <section class="card" id="resultsCard" aria-labelledby="results-title" hidden>
+            <div class="results-head">
+              <div>
+                <h2 id="results-title" style="font-size:1.2rem;margin:0">Results</h2>
+                <div class="result-summary" id="resultSummary" style="margin-top:8px"></div>
+              </div>
+              <div class="btn-row">
+                <label class="visually-hidden" for="sortBy">Sort</label>
+                <select class="input input-sm" id="sortBy" style="width:auto">
+                  <option value="chrono">Chronological</option>
+                  <option value="type">By type</option>
+                  <option value="available">Most participants first</option>
+                  <option value="length">Longest window first</option>
+                </select>
+                <button class="btn btn-sm" type="button" id="copyResults"><i data-icon="copy"></i> Copy overview</button>
+              </div>
+            </div>
+            <div id="resultNotes"></div>
+            <div id="results" aria-live="polite"></div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© <span id="year">2026</span> Sensibiliseringscampagne orgaandonatie</span>
+      <span class="privacy-inline"><i data-icon="shield"></i> Files are only processed in this browser. Close the page to forget everything.</span>
+    </div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="core.js"></script>
+  <script src="matcher.js"></script>
+  <script src="ui.js"></script>
+  <script src="coordinator.js"></script>
+</body>
+</html>
